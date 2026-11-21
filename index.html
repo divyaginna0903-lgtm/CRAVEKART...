@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrewBoard – ZeroQueue Canteen</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">☕ BrewBoard <span>ZeroQueue Canteen</span></div>
+    <nav class="tabs">
+      <button class="tab active" data-view="order">Order</button>
+      <button class="tab" data-view="wall">Wall Screen</button>
+      <button class="tab" data-view="kot">Kitchen (KOT)</button>
+    </nav>
+    <div class="top-actions">
+      <button id="myTokenBtn" class="chip hidden">🎫 My Token</button>
+      <button id="cartBtn" class="cart-btn">🛒 <span id="cartCount">0</span> · ₹<span id="cartTotalTop">0</span></button>
+    </div>
+  </header>
+
+  <!-- ORDER VIEW -->
+  <main id="view-order" class="view">
+    <div class="wallet-bar">💳 Student Wallet: <b>₹<span id="walletBal">0</span></b>
+      <button id="topupBtn" class="chip">+ Add ₹100</button>
+    </div>
+    <div id="categories" class="categories"></div>
+    <div id="menuGrid" class="menu-grid"></div>
+  </main>
+
+  <!-- WALL VIEW -->
+  <main id="view-wall" class="view hidden wall">
+    <div class="wall-head">
+      <h1>CANTEEN PICKUP BOARD</h1>
+      <button id="soundBtn" class="chip">🔇 Enable Sound</button>
+    </div>
+    <div class="wall-cols">
+      <section class="col preparing">
+        <h2>🔥 NOW PREPARING</h2>
+        <div id="wallPreparing" class="tokens"></div>
+      </section>
+      <section class="col ready">
+        <h2>✅ READY FOR PICKUP</h2>
+        <div id="wallReady" class="tokens"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- KOT VIEW -->
+  <main id="view-kot" class="view hidden">
+    <div class="kot-layout">
+      <section>
+        <h2>Order Tickets</h2>
+        <div id="kotList" class="kot-list"></div>
+      </section>
+      <aside>
+        <h2>Stock Control</h2>
+        <div id="stockList" class="stock-list"></div>
+        <button id="resetBtn" class="danger">Reset All Data</button>
+      </aside>
+    </div>
+  </main>
+
+  <!-- CART DRAWER -->
+  <div id="drawer" class="drawer">
+    <div class="drawer-head">
+      <h2>Your Cart</h2>
+      <button id="closeDrawer" class="icon-btn">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="drawer-foot">
+      <label class="slot-label">Pickup time
+        <select id="slotSelect"></select>
+      </label>
+      <div class="row"><span>Subtotal</span><b>₹<span id="cartTotal">0</span></b></div>
+      <button id="quickPayBtn" class="primary big">⚡ Quick Pay</button>
+    </div>
+  </div>
+  <div id="backdrop" class="backdrop hidden"></div>
+
+  <!-- CUSTOMIZER MODAL -->
+  <div id="customModal" class="modal hidden">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2 id="cmTitle"></h2>
+        <button class="icon-btn" data-close>✕</button>
+      </div>
+      <div id="cmBody"></div>
+      <div class="qty">
+        <button id="cmMinus" class="qbtn">−</button>
+        <span id="cmQty">1</span>
+        <button id="cmPlus" class="qbtn">+</button>
+      </div>
+      <button id="cmAdd" class="primary big"></button>
+    </div>
+  </div>
+
+  <!-- PAYMENT MODAL -->
+  <div id="payModal" class="modal hidden">
+    <div class="modal-box center">
+      <div class="modal-head">
+        <h2>Pay ₹<span id="payAmount"></span></h2>
+        <button class="icon-btn" data-close>✕</button>
+      </div>
+      <div class="pay-tabs">
+        <button class="ptab active" data-pay="upi">UPI QR</button>
+        <button class="ptab" data-pay="wallet">Wallet Card</button>
+      </div>
+      <div id="payUpi">
+        <canvas id="qrCanvas" width="220" height="220"></canvas>
+        <p class="muted small">Scan with any UPI app (mock)</p>
+      </div>
+      <div id="payWallet" class="hidden">
+        <div class="wallet-card">🎓 Campus ID Card<br /><b>Balance ₹<span id="payWalletBal"></span></b></div>
+        <p class="muted small">Tap to pay instantly</p>
+      </div>
+      <p id="payStatus" class="muted"></p>
+      <button id="payNowBtn" class="primary big">Pay Now</button>
+    </div>
+  </div>
+
+  <!-- RECEIPT MODAL -->
+  <div id="receiptModal" class="modal hidden">
+    <div class="modal-box center">
+      <div class="modal-head">
+        <h2>Order Confirmed 🎉</h2>
+        <button class="icon-btn" data-close>✕</button>
+      </div>
+      <div class="token-big" id="rcToken"></div>
+      <div id="rcStatus" class="status-pill"></div>
+      <p id="rcEta" class="muted"></p>
+      <ul id="rcItems" class="rc-items"></ul>
+      <p class="muted small">Token saved on this device – works even if network drops.</p>
+      <button class="primary big" data-close>Done</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="script.js"></script>
+</body>
+</html>
